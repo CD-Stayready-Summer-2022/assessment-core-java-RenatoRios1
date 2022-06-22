@@ -1,6 +1,7 @@
 package com.codedifferently.assessment01.part02;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -51,6 +52,7 @@ public class PetOwnerTest {
         Assertions.assertTrue(outcome);
     }
 
+    //This test will always return a Null Pointer exception set up this way no?
     @Test
     public void removePetTest() {
         // Given
@@ -64,6 +66,24 @@ public class PetOwnerTest {
 
         // Then
         Assertions.assertEquals(expected, actual);
+    }
+    //^^^^^^REGARDING THIS TEST^^^^^^^^^^^^^^ READ BELOW
+    //Couldn't we replace the test above with something better since we're not checking to see if a pet is null?
+    //Instead, we should be checking to see if the array of pets obtained from getPets() is null or empty
+    //Below is a better test for this proposal
+    @Test
+    @DisplayName("Better removePet Test in case that there are not pets")
+    public void removePetTestEmptyPetsArray() {
+        // Given
+        Pet newPet = new Dog();
+        PetOwner po = new PetOwner("", newPet);
+
+        // When
+        po.removePet(newPet);
+        Pet[] actual = po.getPets();
+
+        // Then
+        Assertions.assertNull(actual);
     }
 
     @Test
